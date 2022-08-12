@@ -1,14 +1,15 @@
 import random
 
 class Map():
-    def form_map(self):
-        global list
+
+
+    def __init__(self):
         list = []
         for y in range(0,10):
             list.append([])
             for x in range(0,10):
-                list[y].append(' x')
-        return list
+                list[y].append(' ')
+        self.map = list
 
     def clear_path(self,cy,cx):
         global list

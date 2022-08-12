@@ -14,4 +14,15 @@ class Creature():
         print('Defence:',self.dfc)
         print('Luck:', self.luc)
 
-
+    def return_name(self):
+        return(self.name)
+    def return_race(self):
+        return(self.race)
+    def return_con(self):
+        return(self.con)
+    def return_pwr(self):
+        return(self.pwr)
+    def return_dfc(self):
+        return(self.dfc)
+    def return_luc(self):
+        return(self.luc)

@@ -118,43 +118,6 @@ def fight_sequence(h_hp1, h_atk1, h_crit1, h_dfc1, m_hp1, m_atk1, m_crit1, m_dfc
                 monster_fought = m_race1
                 return post_fight_hp, monster_fought
 
-# def encounter():
-#     global hero1
-#     global lineup_list
-#     for s in range(len(lineup_list)):
-#         time.sleep(1)
-#         print('-'*30)
-#         monster_encountered = lineup_list[s].return_race()
-#         print(hero1.return_name(),'have encountered a wild', monster_encountered)
-#         print('Monster encountered stats')
-#         if s == 0:
-#             hero_combat_initialize(hero1.return_con(),hero1.return_pwr(),hero1.return_luc(),hero1.return_dfc())
-#         elif s != 0:
-#             hero_combat_initialize2(hero1.return_current_hp(), hero1.return_pwr(), hero1.return_luc(), hero1.return_dfc())
-#         monster_combat_initialize(lineup_list[s].return_con(),lineup_list[s].return_pwr(),lineup_list[s].return_luc(),lineup_list[s].return_dfc())
-#         while True:
-#             battle_choice = input('will you fight or run ?')
-#             if battle_choice == 'fight':
-#                 print('you will fight like a man')
-#                 print('-' * 30)
-#                 fight_sequence(h_hp, h_atk, h_crit, h_dfc_rate, m_hp, m_atk, m_crit, m_dfc_rate)
-#                 hero1.set_current_hp(hero1.return_name(),post_fight_hp)
-#                 break
-#             elif battle_choice == 'run':
-#                 print('you run for your life')
-#                 if hero1.return_luc() > 3:
-#                     time.sleep(1)
-#                     print('you have successfully become a pussy')
-#                     break
-#                 else:
-#                     time.sleep(1)
-#                     print('you have failed to escape')
-#                     fight_sequence(h_hp, h_atk, h_crit, h_dfc_rate, m_hp, m_atk, m_crit, m_dfc_rate)
-#                     hero1.set_current_hp(hero1.return_name(),post_fight_hp)
-#                     break
-#             else:
-#                 print('please choose fight or run')
-
 
 def hero_naming():
     global h_name, h_race

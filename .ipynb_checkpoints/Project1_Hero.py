@@ -13,11 +13,11 @@ def stat_randomize():
             return a, b, c, d
 
 class Hero(Creature):
-    def set_data(self, *data):
-        super().set_data(*data)
-
-    def show_data(self):
-        super().show_data()
+    # def set_data(self, *data):
+    #     super().set_data(*data)
+    #
+    # def show_data(self):
+    #     super().show_data()
 
     def orc_soul(self, pwr):
         self.pwr += pwr
@@ -86,19 +86,21 @@ class Hero(Creature):
         self.current_hp = h_current_hp
         print(h_name,'\'s current hp is',h_current_hp)
 
-    def return_race(self):
-        return(self.race)
-    def return_con(self):
-        return(self.con)
-    def return_pwr(self):
-        return(self.pwr)
-    def return_dfc(self):
-        return(self.dfc)
-    def return_luc(self):
-        return(self.luc)
+    # def return_race(self):
+    #     return(self.race)
+    # def return_con(self):
+    #     return(self.con)
+    # def return_pwr(self):
+    #     return(self.pwr)
+    # def return_dfc(self):
+    #     return(self.dfc)
+    # def return_luc(self):
+    #     return(self.luc)
+
     def return_current_hp(self):
         return(self.current_hp)
 
+    #access methods
 
 
 # def hero_start():
