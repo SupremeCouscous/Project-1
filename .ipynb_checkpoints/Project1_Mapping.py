@@ -2,18 +2,17 @@ import random
 
 class Map():
 
-
     def __init__(self):
         list = []
         for y in range(0,10):
             list.append([])
             for x in range(0,10):
-                list[y].append(' ')
+                list[y].append('  ')
         self.map = list
 
     def clear_path(self,cy,cx):
-        global list
-        list[cy][cx] = ' x'
+
+        self.map[cy][cx] = '  '
 
     def set_coordinate(self,*data):
         self.y_value = data[0]
@@ -21,12 +20,12 @@ class Map():
 
     def print_map(self):
         print(self.y_value, self.x_value)
-        list[self.y_value][self.x_value] = ' 0'
-        for y in range(len(list)):
+        self.map[self.y_value][self.x_value] = ' 0'
+        for y in range(len(self.map)):
             print('')
             print('-'*40)
-            for x in range(len(list)):
-                print(list[y][x], '|', end = '')
+            for x in range(len(self.map)):
+                print(self.map[y][x], '|', end = '')
         print('')
         print('-'*40)
         print('Y:',self.y_value,'X:',self.x_value)

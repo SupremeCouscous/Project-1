@@ -40,6 +40,9 @@ class Hero(Creature):
 
     def stat_initialize(self):
         x = 3
+        h_name = input('Please input hero name : ')
+        time.sleep(1)
+        h_race = 'human'
         z = input('Type roll to determine for your stats : ')
         while x ==3:
             if z == 'roll':
@@ -77,7 +80,6 @@ class Hero(Creature):
                     else:
                         print('please type yes or no')
                         continue
-
 
     def return_name(self):
         return(self.name)

@@ -92,7 +92,7 @@ def fight_sequence(h_hp1, h_atk1, h_crit1, h_dfc1, m_hp1, m_atk1, m_crit1, m_dfc
                 print(h_name1,'You have been ambushed by ', m_name1,'the',m_race1)
         elif turn == 0:
             turn = 1
-            time.sleep(1)
+            time.sleep(0.5)
             print('Hero attacks')
             h_damage = round(crit_chance(h_crit1,(h_atk1-h_atk1*m_dfc1)))
             m_hp1 -= h_damage
@@ -106,7 +106,7 @@ def fight_sequence(h_hp1, h_atk1, h_crit1, h_dfc1, m_hp1, m_atk1, m_crit1, m_dfc
                 return post_fight_hp, monster_fought
         elif turn == 1:
             turn = 0
-            time.sleep(1)
+            time.sleep(0.5)
             print('Monster attacks')
             m_damage = round(crit_chance(m_crit1,(m_atk1-m_atk1*h_dfc1)))
             h_hp1 -= m_damage
@@ -114,6 +114,7 @@ def fight_sequence(h_hp1, h_atk1, h_crit1, h_dfc1, m_hp1, m_atk1, m_crit1, m_dfc
             print('-'*50)
             if h_hp1 < 0:
                 print('YOU HAVE DIED')
+                quit()
                 post_fight_hp = h_hp1
                 monster_fought = m_race1
                 return post_fight_hp, monster_fought
@@ -135,7 +136,6 @@ def stat_randomize():
         d = random.randint(1, 7)
         if a + b + c + d == 20:
             return a, b, c, d
-
 
 def stat_initialize():
     global a,b,c,d
@@ -190,7 +190,7 @@ def hero_start():
     hero_naming()
     time.sleep(0.8)
     stat_initialize()
-    hero1.set_data(h_name, h_race, a,b, c, d)
+    hero1.set_data(h_name, h_race, a, b, c, d)
     hero1.show_data()
     hero1.set_current_hp(hero1.return_name(),int(a)*25)
     return hero1
@@ -198,7 +198,6 @@ def hero_start():
 def map_initialize():
     global map1
     map1 = Map()
-    map1.form_map()
     map1.set_coordinate(4,4)
     time.sleep(1.5)
     map1.print_map()
