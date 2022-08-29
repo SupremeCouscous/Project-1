@@ -11,9 +11,8 @@ class Map():
         self.map = list
 
     def clear_path(self,cy,cx):
-
         self.map[cy][cx] = '  '
-
+#reload
     def set_coordinate(self,*data):
         self.y_value = data[0]
         self.x_value = data[1]

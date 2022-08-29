@@ -3,7 +3,7 @@ import time
 import random
 
 def stat_randomize():
-    global a, b, c, d
+    # global a, b, c, d
     while True:
         a = random.randint(1, 7)
         b = random.randint(1, 7)
@@ -31,97 +31,104 @@ class Hero(Creature):
     def goblin_soul(self, luc):
         self.luc += luc
 
-    # def hero_naming(self):
-    #     global h_name, h_race
-    #     h_name = input('Please input hero name : ')
-    #     time.sleep(0.6)
-    #     h_race = 'human'
-    #     return h_name, h_race
-
     def stat_initialize(self):
+        a,b,c,d = stat_randomize()
         x = 3
         h_name = input('Please input hero name : ')
+        print('-'*100)
         time.sleep(1)
         h_race = 'human'
+        print('-'*100)
         z = input('Type roll to determine for your stats : ')
-        while x ==3:
+        print('-'*100)
+        while x == 3:
             if z == 'roll':
                 stat_randomize()
                 print('Constitution:',a,'Power',b,'Luck:',c,'Defence:',d)
                 x -= 1
                 while x!= 0:
-                    print('you have', x, 'more rolls')
-                    g = input('would you like to reroll')
+                    print('you have', x, 'more  rolls,', end = '')
+                    g = input(' would you like to reroll : ')
+                    print('-' * 100)
                     if g == 'yes':
                         x -= 1
                         stat_randomize()
                         print('Constitution:',a,'Power',b,'Luck:',c,'Defence:',d)
+                        print('-' * 100)
                     elif g == 'no':
                         print('Constitution:',a,'Power',b,'Luck:',c,'Defence:',d)
-                        return(a,b,c,d)
+                        self.set_data(h_name, h_race, a,b,c,d)
+                        print('-' * 100)
+                        break
                     else:
-                        print('please type yes or no')
+                        print('please type yes or no : ')
                         continue
             else:
-                print('how difficult is it to type the word roll')
+                print('-' * 100)
+                print('How difficult is it to type the word roll :')
                 stat_randomize()
                 print('Constitution:',a,'Power',b,'Luck:',c,'Defence:',d)
+                print('-' * 100)
                 x -= 1
                 while x!= 0:
-                    print('you have', x, 'more rolls')
-                    g = input('would you like to reroll')
+                    print('-' * 100)
+                    print('You have', x, 'more rolls')
+                    g = input(',would you like to reroll (yes/no) : ')
+                    print('-' * 100)
                     if g == 'yes':
                         x -= 1
                         stat_randomize()
                         print('Constitution:',a,'Power',b,'Luck:',c,'Defence:',d)
+                        print('-'*100)
                     elif g == 'no':
                         print('Constitution:',a,'Power',b,'Luck:',c,'Defence:',d)
-                        return(a,b,c,d)
+                        self.set_data(h_name, h_race, a,b,c,d)
+                        print('-' * 100)
+                        break
                     else:
                         print('please type yes or no')
                         continue
+
+    # access methods
 
     def return_name(self):
         return(self.name)
 
-    def set_current_hp(self, h_name, h_current_hp):
+    def set_current_hp(self, h_current_hp):
         self.current_hp = h_current_hp
-        print(h_name,'\'s current hp is',h_current_hp)
+        print(self.return_name(),'\'s current hp is',h_current_hp)
 
-    # def return_race(self):
-    #     return(self.race)
-    # def return_con(self):
-    #     return(self.con)
-    # def return_pwr(self):
-    #     return(self.pwr)
-    # def return_dfc(self):
-    #     return(self.dfc)
-    # def return_luc(self):
-    #     return(self.luc)
 
     def return_current_hp(self):
         return(self.current_hp)
 
-    #access methods
+    def combat_initialize1(self):
+        # constitution to hp conversion
+        self.current_hp = self.return_con()*25
+        # power to attack conversion
+        self.atk = self.return_pwr()*4.5
+        # critical chance calculation
+        self.crit = self.return_luc()*2.5
+        # defence rating conversion
+        self.dfc_rate = self.return_dfc()/20
+        print('Hero HP:', self.current_hp, 'Hero Attack: ', self.atk, "Hero crit chance: ", self.crit, "Hero defence:", self.dfc_rate)
+        return self.return_name(),self.current_hp, self.atk, self.crit, self.dfc_rate
+
+    def combat_initialize2(self):
+        # power to attack conversion
+        self.atk = self.return_pwr()* 4.5
+        # critical chance calculation
+        self.crit = self.return_luc()*2.5
+        # defence rating conversion
+        self.dfc_rate = self.return_dfc()/20
+        print('Hero HP:', self.current_hp, 'Hero Attack: ', self.atk, "Hero crit chance: ", self.crit, "Hero defence:", self.dfc_rate)
+        return self.return_name(),self.current_hp, self.atk, self.crit, self.dfc_rate
 
 
-# def hero_start():
-#     global hero1
-#     hero1 = Hero()
-#     print('-'*70)
-#     print('You have entered character creation')
-#     print('-'*70)
-#     time.sleep(0.8)
-#     hero1.hero_naming()
-#     time.sleep(0.8)
-#     hero1.stat_initialize()
-#     hero1.set_data(h_name, h_race, a, b, c, d)
-#     hero1.show_data()
-#     hero1.set_current_hp(a*25)
-#     return hero1
+def main():
+    hero1 = Hero()
+    hero1.stat_initialize()
+    hero1.show_data
 
-
-# hero_start()
-
-# if __name__ == "__main__":
-    # hero_start()
+if __name__ == '__main__':
+    main()

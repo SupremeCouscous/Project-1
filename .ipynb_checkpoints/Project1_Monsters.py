@@ -3,16 +3,19 @@ import random
 import time
 
 class Monster(Creature):
-    pass
-    # def set_data(self, *data):
-    #     super().set_data(*data)
-    # def show_data(self):
-    #     super().show_data()
+
+    def monster_combat_initialize(self):
+        self.current_hp = self.return_con()*20
+        self.atk = self.return_pwr()*3
+        self.crit = self.return_luc()*2
+        self.dfc_rate = self.return_dfc()/20
+        print('Monster HP:', self.current_hp, 'Monster Attack: ', self.atk, "Monster crit chance: ", self.crit, "Monster defence:",
+        self.dfc_rate)
+        return self.return_name(),self.return_race(),self.current_hp, self.atk, self.crit, self.dfc_rate
 
 class Ogre(Monster):
 
     def ogre_start(self):
-        # global ogre_name, ogre_race, ogre_con,ogre_pwr,ogre_dfc,ogre_luc
         ogre_name_list = ['Stonehead','Stonebrain','Thick']
         ogre_name = random.choice(ogre_name_list )
         ogre_race = 'ogre'
@@ -23,12 +26,7 @@ class Ogre(Monster):
         self.set_data(ogre_name, ogre_race, ogre_con,ogre_pwr,ogre_dfc,ogre_luc)
 
 class Undead(Monster):
-    # def set_data(self, *data):
-    #     super().set_data(*data)
-    # def show_data(self):
-    #     super().show_data()
     def undead_start(self):
-        # global undead_name, undead_race, undead_con,undead_pwr,undead_dfc,undead_luc
         undead_name_list = ['Brittle','Tibia','Themer']
         undead_name = random.choice(undead_name_list)
         undead_race = 'undead'
@@ -39,12 +37,7 @@ class Undead(Monster):
         self.set_data(undead_name, undead_race, undead_con,undead_pwr,undead_dfc,undead_luc)
 
 class Goblin(Monster):
-    # def set_data(self, *data):
-    #     super().set_data(*data)
-    # def show_data(self):
-    #     super().show_data()
     def goblin_start(self):
-        # global goblin_name, goblin_race, goblin_con,goblin_pwr,goblin_dfc,goblin_luc
         goblin_name_list = ['Snitch','Ratnose','Shwifty']
         goblin_name = random.choice(goblin_name_list)
         goblin_race = 'goblin'
@@ -55,13 +48,7 @@ class Goblin(Monster):
         self.set_data(goblin_name, goblin_race, goblin_con,goblin_pwr,goblin_dfc,goblin_luc)
 
 class Orc(Monster):
-    # def set_data(self, *data):
-    #     super().set_data(*data)
-    # def show_data(self):
-    #     super().show_data()
-
     def orc_start(self):
-        # global orc_name, orc_race, orc_con,orc_pwr,orc_dfc,orc_luc
         orc_name_list = ['Bloodmane','Teethbreaker','Curbstomp']
         orc_name = random.choice(orc_name_list)
         orc_race = 'orc'
@@ -72,12 +59,8 @@ class Orc(Monster):
         self.set_data(orc_name, orc_race, orc_con,orc_pwr,orc_dfc,orc_luc)
 
 class Dark_elf(Monster):
-    def set_data(self, *data):
-        super().set_data(*data)
-    def show_data(self):
-        super().show_data()
+
     def dark_elf_start(self):
-        # global dark_elf_name, dark_elf_race, dark_elf_con,dark_elf_pwr,dark_elf_dfc,dark_elf_luc
         dark_elf_name_list = ['Kabip','Lanik','Wadeep']
         dark_elf_name = random.choice(dark_elf_name_list)
         dark_elf_race = 'dark_elf'
@@ -88,39 +71,29 @@ class Dark_elf(Monster):
         self.set_data(dark_elf_name, dark_elf_race, dark_elf_con,dark_elf_pwr,dark_elf_dfc,dark_elf_luc)
 
 def ogre_start():
-    # global ogre1
     ogre1 = Ogre()
     ogre1.ogre_start()
-    # ogre1.set_data(ogre_name, ogre_race, ogre_con,ogre_pwr,ogre_dfc,ogre_luc)
     return ogre1
 
 def undead_start():
-    # global undead1
     undead1 = Undead()
     undead1.undead_start()
-    # undead1.set_data(undead_name, undead_race, undead_con,undead_pwr,undead_dfc,undead_luc)
     return undead1
 
 
 def goblin_start():
-    # global goblin1
     goblin1 = Goblin()
     goblin1.goblin_start()
-    # goblin1.set_data(goblin_name, goblin_race, goblin_con,goblin_pwr,goblin_dfc,goblin_luc)
     return goblin1
 
 def dark_elf_start():
-    # global dark_elf1
     dark_elf1 = Dark_elf()
     dark_elf1.dark_elf_start()
-    # dark_elf1.set_data((dark_elf_name, dark_elf_race, dark_elf_con,dark_elf_pwr,dark_elf_dfc,dark_elf_luc)
     return dark_elf1
 
 def orc_start():
-    # global orc1
     orc1 = Orc()
     orc1.orc_start()
-    # orc1.set_data((orc_name, orc_race, orc_con,orc_pwr,orc_dfc,orc_luc))
     return orc1
 
 def monster_line_up():
