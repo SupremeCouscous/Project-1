@@ -8,13 +8,13 @@ from Project1_Mapping import *
 
 def crit_chance(crit1,atk1):
     a = random.randint(1,100)
-    # b = random.randint(80,120)
+    b = random.randint(80,120)
     if a > crit1:
-        return atk1
+        return (atk1*b)/100
     elif a <= crit1:
         time.sleep(1)
         print('it is a critical hit')
-        return atk1*2
+        return (atk1*b*2)/100
 
 def fight_sequence(h_name1, h_hp1, h_atk1, h_crit1, h_dfc1, m_name1,m_race1, m_hp1, m_atk1, m_crit1, m_dfc1):
     print('-'*20,'combat mode','-'*20)
@@ -152,18 +152,21 @@ def map_encounter_check(my,mx):
         print(yx_list[s1])
         print('')
 
-def soul_absorb(a):
-    hero1 = hero_start()
-    if a == 'orc':
-        hero1.orc_soul(1)
-    elif a == 'undead':
-        pass
-    elif a == 'dark_elf':
-        hero1.dark_elf_soul(1)
-    elif a == 'ogre':
-        hero1.ogre_soul(1)
-    elif a == 'goblin':
-        hero1.goblin_soul(1)
+# def soul_absorb(a):
+#     hero1 = hero_start()
+#     if a == 'orc':
+#         hero1.orc_soul(1)
+#     elif a == 'undead':
+#         pass
+#     elif a == 'dark_elf':
+#         hero1.dark_elf_soul(1)
+#     elif a == 'ogre':
+#         hero1.ogre_soul(1)
+#     elif a == 'goblin':
+#         hero1.goblin_soul(1)
+
+
+
 
 def main():
     game_start()
@@ -209,7 +212,7 @@ def main():
                     fight_sequence(*alpha_beta)
                     hero1.set_current_hp(post_fight_hp)
                     print('you have captured the soul of the ', monster_fought)
-                    soul_absorb(monster_fought)
+                    hero1.soul_absorb(monster_fought)
                     print('suckadick')
                     time.sleep(1)
                     # hero1.show_data()
@@ -233,7 +236,7 @@ def main():
                         print('-'*50)
                         print('you have captured the soul of the', monster_fought)
                         print('-' * 50)
-                        soul_absorb(monster_fought)
+                        hero1.soul_absorb(monster_fought)
                         time.sleep(1)
                         # hero1.show_data()
                         time.sleep(1)

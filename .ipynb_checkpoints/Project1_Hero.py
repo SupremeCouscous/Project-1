@@ -19,17 +19,30 @@ class Hero(Creature):
     # def show_data(self):
     #     super().show_data()
 
-    def orc_soul(self, pwr):
-        self.pwr += pwr
+    def soul_absorb(self,monster_fought):
 
-    def ogre_soul(self, con):
-        self.con += con
+        if monster_fought == 'orc':
+            self.pwr += 1
+        elif monster_fought == 'undead':
+            pass
+        elif monster_fought == 'dark_elf':
+            self.dfc += 1
+        elif monster_fought == 'ogre':
+            self.con += 1
+        elif monster_fought == 'goblin':
+            self.luc += 1
 
-    def dark_elf_soul(self, dfc):
-        self.dfc += dfc
-
-    def goblin_soul(self, luc):
-        self.luc += luc
+    # def orc_soul(self, pwr):
+    #     self.pwr += pwr
+    #
+    # def ogre_soul(self, con):
+    #     self.con += con
+    #
+    # def dark_elf_soul(self, dfc):
+    #     self.dfc += dfc
+    #
+    # def goblin_soul(self, luc):
+    #     self.luc += luc
 
     def stat_initialize(self):
         a,b,c,d = stat_randomize()
