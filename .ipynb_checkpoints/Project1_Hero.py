@@ -3,7 +3,6 @@ import time
 import random
 
 def stat_randomize():
-    # global a, b, c, d
     while True:
         a = random.randint(1, 7)
         b = random.randint(1, 7)
@@ -13,42 +12,12 @@ def stat_randomize():
             return a, b, c, d
 
 class Hero(Creature):
-    # def set_data(self, *data):
-    #     super().set_data(*data)
-    #
-    # def show_data(self):
-    #     super().show_data()
 
-    def soul_absorb(self,monster_fought):
 
-        if monster_fought == 'orc':
-            self.pwr += 1
-        elif monster_fought == 'undead':
-            pass
-        elif monster_fought == 'dark_elf':
-            self.dfc += 1
-        elif monster_fought == 'ogre':
-            self.con += 1
-        elif monster_fought == 'goblin':
-            self.luc += 1
 
-    # def orc_soul(self, pwr):
-    #     self.pwr += pwr
-    #
-    # def ogre_soul(self, con):
-    #     self.con += con
-    #
-    # def dark_elf_soul(self, dfc):
-    #     self.dfc += dfc
-    #
-    # def goblin_soul(self, luc):
-    #     self.luc += luc
-
-    def stat_initialize(self):
-        a,b,c,d = stat_randomize()
+    def __init__(self):
         x = 3
         h_name = input('Please input hero name : ')
-        print('-'*100)
         time.sleep(1)
         h_race = 'human'
         print('-'*100)
@@ -56,19 +25,19 @@ class Hero(Creature):
         print('-'*100)
         while x == 3:
             if z == 'roll':
-                stat_randomize()
+                a,b,c,d = stat_randomize()
                 print('Constitution:',a,'Power',b,'Luck:',c,'Defence:',d)
                 x -= 1
                 while x!= 0:
-                    print('you have', x, 'more  rolls,', end = '')
-                    g = input(' would you like to reroll : ')
+                    print('You have', x, 'more  rolls,', end = '')
+                    roll_choice = input(' would you like to reroll : (yes/no) ')
                     print('-' * 100)
-                    if g == 'yes':
+                    if roll_choice == 'yes':
                         x -= 1
-                        stat_randomize()
+                        a,b,c,d, = stat_randomize()
                         print('Constitution:',a,'Power',b,'Luck:',c,'Defence:',d)
                         print('-' * 100)
-                    elif g == 'no':
+                    elif roll_choice == 'no':
                         print('Constitution:',a,'Power',b,'Luck:',c,'Defence:',d)
                         self.set_data(h_name, h_race, a,b,c,d)
                         print('-' * 100)
@@ -76,21 +45,22 @@ class Hero(Creature):
                     else:
                         print('please type yes or no : ')
                         continue
+                    self.set_data(h_name, h_race, a, b, c, d)
             else:
                 print('-' * 100)
                 print('How difficult is it to type the word roll :')
-                stat_randomize()
+                a,b,c,d, = stat_randomize()
                 print('Constitution:',a,'Power',b,'Luck:',c,'Defence:',d)
                 print('-' * 100)
                 x -= 1
                 while x!= 0:
                     print('-' * 100)
-                    print('You have', x, 'more rolls')
+                    print('You have', x, 'more rolls', end = '')
                     g = input(',would you like to reroll (yes/no) : ')
                     print('-' * 100)
                     if g == 'yes':
                         x -= 1
-                        stat_randomize()
+                        a,b,c,d, = stat_randomize()
                         print('Constitution:',a,'Power',b,'Luck:',c,'Defence:',d)
                         print('-'*100)
                     elif g == 'no':
@@ -99,7 +69,7 @@ class Hero(Creature):
                         print('-' * 100)
                         break
                     else:
-                        print('please type yes or no')
+                        print('Please type yes or no')
                         continue
 
     # access methods
@@ -111,11 +81,10 @@ class Hero(Creature):
         self.current_hp = h_current_hp
         print(self.return_name(),'\'s current hp is',h_current_hp)
 
-
     def return_current_hp(self):
         return(self.current_hp)
 
-    def combat_initialize1(self):
+    def combat_initialize(self):
         # constitution to hp conversion
         self.current_hp = self.return_con()*25
         # power to attack conversion
@@ -127,20 +96,93 @@ class Hero(Creature):
         print('Hero HP:', self.current_hp, 'Hero Attack: ', self.atk, "Hero crit chance: ", self.crit, "Hero defence:", self.dfc_rate)
         return self.return_name(),self.current_hp, self.atk, self.crit, self.dfc_rate
 
-    def combat_initialize2(self):
-        # power to attack conversion
-        self.atk = self.return_pwr()* 4.5
-        # critical chance calculation
-        self.crit = self.return_luc()*2.5
-        # defence rating conversion
-        self.dfc_rate = self.return_dfc()/20
-        print('Hero HP:', self.current_hp, 'Hero Attack: ', self.atk, "Hero crit chance: ", self.crit, "Hero defence:", self.dfc_rate)
-        return self.return_name(),self.current_hp, self.atk, self.crit, self.dfc_rate
+    def return_atk(self):
+        return(self.atk)
+    def return_dfc_rate(self):
+        return(self.dfc_rate)
+    def return_crit(self):
+        return(self.crit)
+
+    def soul_absorb(self,monster_fought):
+        greater_lesser = random.randint(0,100)
+        if greater_lesser > 70:
+            if monster_fought == 'orc':
+                time.sleep(1)
+                print('-' * 50)
+                print('you have captured the greater soul of the ', monster_fought)
+                print('-' * 50)
+                time.sleep(1)
+                self.pwr += 2
+                self.show_data()
+            elif monster_fought == 'undead':
+                pass
+            elif monster_fought == 'dark_elf':
+                time.sleep(1)
+                print('-' * 50)
+                print('you have captured the greater soul of the ', monster_fought)
+                print('-' * 50)
+                time.sleep(1)
+                self.dfc += 2
+                self.show_data()
+            elif monster_fought == 'ogre':
+                time.sleep(1)
+                print('-' * 50)
+                print('you have captured the greater soul of the ', monster_fought)
+                print('-' * 50)
+                time.sleep(1)
+                self.con += 2
+                self.current_hp += 50
+                self.show_data()
+            elif monster_fought == 'goblin':
+                time.sleep(1)
+                print('-' * 50)
+                print('you have captured the greater soul of the ', monster_fought)
+                print('-' * 50)
+                time.sleep(1)
+                self.luc += 2
+                self.show_data()
+        else:
+
+            if monster_fought == 'orc':
+                time.sleep(1)
+                print('-' * 50)
+                print('you have captured the lesser soul of the ', monster_fought)
+                print('-' * 50)
+                time.sleep(1)
+                self.pwr += 1
+                self.show_data()
+            elif monster_fought == 'undead':
+                pass
+            elif monster_fought == 'dark_elf':
+                time.sleep(1)
+                print('-' * 50)
+                print('you have captured the lesser soul of the ', monster_fought)
+                print('-' * 50)
+                time.sleep(1)
+                self.dfc += 1
+                self.show_data()
+            elif monster_fought == 'ogre':
+                time.sleep(1)
+                print('-' * 50)
+                print('you have captured lesser soul of the ', monster_fought)
+                print('-' * 50)
+                time.sleep(1)
+                self.con += 1
+                self.current_hp += 25
+                self.show_data()
+            elif monster_fought == 'goblin':
+                time.sleep(1)
+                print('-' * 50)
+                print('you have captured the lesser soul of the ', monster_fought)
+                print('-' * 50)
+                time.sleep(1)
+                self.luc += 1
+                self.show_data()
+
 
 
 def main():
     hero1 = Hero()
-    hero1.stat_initialize()
     hero1.show_data
 
 if __name__ == '__main__':

@@ -13,6 +13,30 @@ class Monster(Creature):
         self.dfc_rate)
         return self.return_name(),self.return_race(),self.current_hp, self.atk, self.crit, self.dfc_rate
 
+    def return_atk(self):
+        return(self.atk)
+    def return_dfc_rate(self):
+        return(self.dfc_rate)
+    def return_crit(self):
+        return(self.crit)
+    def return_current_hp(self):
+        return(self.current_hp)
+
+#Coordinates
+    def set_coordinate(self,y,x):
+        self.y_value = y
+        self.x_value = x
+    def return_y_coordinate(self):
+        return(self.y_value)
+    def return_x_coordinate(self):
+        return(self.x_value)
+    def show_coordinates(self):
+        print(self.y_value,self.x_value)
+    def dead_or_alive(self,status):
+        pass
+
+#Monster class initiate
+
 class Ogre(Monster):
 
     def ogre_start(self):
@@ -132,6 +156,7 @@ def monster_line_up():
 #         print('Monster',ll2,'is at Y:', y_list[ll2],'X:',x_list[ll2])
 #         return y_list, x_list
 
-#need to address recurring location
+#need to address recurring location - done
 
+#sort lineuplist
 monster_line_up()

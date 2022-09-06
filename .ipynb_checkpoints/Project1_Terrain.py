@@ -1,148 +1,223 @@
 import random
+import time
 
+def occupant_check(location,location_list):
+    if location in location_list:
+        return True
+    else:
+        return False
 
-def terrain_randomize():
-    in_out_list =[]
-    monster_locations = []
-    bd_list = [0,9]
-    a = random.randint(0,9)
-    b = random.choice(bd_list)
-    c = random.choice(bd_list)
-    d = random.randint(0,9)
-    in_out_list.append([a,b])
-    in_out_list.append([c,d])
-    for k in range(5):
-            e = random.randint(0,9)
-            f = random.randint(0,9)
-            if [e,f] != in_out_list[0] and [e,f] != in_out_list[1]:
-                monster_locations.append([e,f]) # how to not overlap
-
-    return in_out_list, monster_locations
-
+# def terrain_randomize():
+#     in_out_list =[]
+#     monster_locations = []
+#     bd_list = [0,9]
+#     a = random.randint(0,9)
+#     b = random.choice(bd_list)
+#     c = random.choice(bd_list)
+#     d = random.randint(0,9)
+#     in_out_list.append([a,b])
+#     in_out_list.append([c,d])
+#     for k in range(5):
+#             e = random.randint(0,9)
+#             f = random.randint(0,9)
+#             while occupant_check([e,f],in_out_list+monster_locations):
+#                 e = random.randint(0, 9)
+#                 f = random.randint(0, 9)
+#             monster_locations.append([e,f])
+#     return in_out_list, monster_locations
+# [e,f]
 
 class location():
     def set_data(self, *data):
         self.y_value = data[0]
         self.x_value = data[1]
         self.symbol = data[2]
+        self.h_here = data[3]
     def show_data(self):
-        print(self.symbol, end = '')
-        print(' | ', end = '')
+        if self.h_here == '1':
+            print('H',end = '')
+            print(' | ', end='')
+        else:
+            print(self.symbol, end = '')
+            print(' | ', end = '')
+
+    def set_h_here(self,parameter):
+        self.h_here = parameter
+
+    def return_symbol(self):
+        return self.symbol
+
+    def return_y_value(self):
+        return self.y_value
+    def return_x_value(self):
+        return self.x_value
+
+# things to address
+# pathing issue
+# 1. create two spaces in random directions surrounding all objects
+# 2. generate a pathway towards entry to be blank
+# 3. The wolverine - movement (miniboss)
 
 class Map():
 
     def __init__(self):
-        in_out_list, monster_locations = terrain_randomize()
-        ab = tuple(in_out_list[0])
-        cd = tuple(in_out_list[1])
-        m1 = tuple(monster_locations[0])
-        m2 = tuple(monster_locations[1])
-        m3 = tuple(monster_locations[2])
-        m4 = tuple(monster_locations[3])
-        m5 = tuple(monster_locations[4]) # better way?
+    #Monster location and portal generation
+        in_out_list = []
+        monster_locations = []
+        bd_list = [0, 9]
+        a = random.randint(0, 9)
+        b = random.choice(bd_list)
+        c = random.choice(bd_list)
+        d = random.randint(0, 9)
+        in_out_list.append([a, b])
+        in_out_list.append([c, d])
+        for k in range(5):
+            e = random.randint(0, 9)
+            f = random.randint(0, 9)
+            while occupant_check([e, f], in_out_list + monster_locations):
+                e = random.randint(0, 9)
+                f = random.randint(0, 9)
+            monster_locations.append([e, f])
+        self.monster_locations = monster_locations
+        self.in_out_list = in_out_list
+
+    #Actual map list of list Generation
         terrain_list = []
         for y in range(0,10):
             terrain_list.append([])
             for x in range(0,10):
                 location1 = location()
-                if (y, x) == ab:
-                    location1.set_data(y, x, 'I')
-                elif (y, x) == cd:
-                    location1.set_data(y, x, 'O')
-                elif (y,x) == m1 or (y,x) == m2 or (y,x) == m3 or (y,x) == m4 or (y,x) == m5:
-                    location1.set_data(y, x, 'M')
+                if [y, x] == self.in_out_list[0]:
+                    location1.set_data(y, x, 'I','1')
+                    self.set_h_coordinate(y,x)
+                elif [y, x] == self.in_out_list[1]:
+                    location1.set_data(y, x, 'O','0')
+                elif [y, x] in self.monster_locations:
+                    location1.set_data(y, x, 'M','0')
                 else:
                     obstacle_chance = random.randint(0,100)
-                    if obstacle_chance < 80:
-                        location1.set_data(y, x, ' ')
+                    if obstacle_chance < 75:
+                        location1.set_data(y, x, ' ','0')
                     else:
-                        location1.set_data(y, x, '#')
+                        location1.set_data(y, x, '#','0')
                 terrain_list[y].append(location1)
                 self.map = terrain_list
 
-    def set_coordinate(self,*data):
+    #Monster location map to monster list
+
+    def index_mapping(self,monster_line_up):
+        for m in range(len(monster_line_up)):
+            y = self.return_monster_y_coordinate(m)
+            x = self.return_monster_x_coordinate(m)
+            monster_line_up[m].set_coordinate(y,x)
+        for m2 in range(len(monster_line_up)):
+            print('Monster', m2, 'is located at YX:',end ='')
+            monster_line_up[m2].show_coordinates()
+
+    def return_monster_y_coordinate(self,monster_index):
+        return self.monster_locations[monster_index][0]
+
+    def return_monster_x_coordinate(self,monster_index):
+        return self.monster_locations[monster_index][1]
+
+    if self.h_y_value self.h_x_value -
+    monster line up (list of class)
+    battle(monster_line_up)
+
+    def set_h_coordinate(self,*data):
         self.h_y_value = data[0]
         self.h_x_value = data[1]
+
+    def show_h_coordinate(self):
+        print('Y:',self.h_y_value,'X:',self.h_x_value)
 
     def print_map(self):
         for y in range(len(self.map)):
             print('')
-            print('-'*38)
+            print('-'*41)
+            print('| ',end ='')
             for x in range(len(self.map)):
-                self.map[y][x].show_data()
+                if [self.h_y_value,self.h_x_value] == [self.map[y][x].return_y_value(),self.map[y][x].return_x_value()]:
+                    self.map[y][x].set_h_here('1')
+                    self.map[y][x].show_data()
+                    self.map[y][x].set_h_here('0') #is this the best method?
+                else:
+                    self.map[y][x].show_data()
+
         print('')
-        print('-'*38)
+        print('-'*41)
 
-map1 = Map()
-map1.print_map()
+    def terrain_check(self,direction):
+        if direction == 'w':
+            if self.map[((lambda y: y - 1)(self.h_y_value))][self.h_x_value].return_symbol() != '#':
+                return True
+        elif direction == 's':
+            if self.map[int((lambda y: y + 1)(self.h_y_value))][self.h_x_value].return_symbol() != '#':
+                return True
+        elif direction == 'd':
+            if self.map[self.h_y_value][int((lambda x: x + 1)(self.h_x_value))].return_symbol() != '#':
+                return True
+        elif direction == 'a':
+            if self.map[self.h_y_value][int((lambda x: x - 1)(self.h_x_value))].return_symbol() != '#':
+                return True
 
-    # def __init__(self):
-    #     list = []
-    #     for y in range(0,10):
-    #         list.append([])
-    #         for x in range(0,10):
-    #             list[y].append('  ')
-    #     self.map = list
-    #
-    # def clear_path(self,cy,cx):
-    #     self.map[cy][cx] = '  '
-# class Map():
+    def monster_check(self):
+        if self.map[self.h_y_value][self.h_x_value].return_symbol() == 'M':
+            return True
+
+    def movement(self):
+        movement = input('W for North, S for South, D for East, A for West: ')
+        if movement == 'w':
+            if self.h_y_value > 0 and self.terrain_check('w') == True:
+                self.h_y_value -= 1
+            else:
+                print('you have hit a wall')
+                pass
+        elif movement == 's':
+            if self.h_y_value < 9 and self.terrain_check('s') == True:
+                self.h_y_value += 1
+            else:
+                print('you have hit a wall')
+                pass
+        elif movement == 'd':
+            if self.h_x_value < 9 and self.terrain_check('d') == True:
+                self.h_x_value += 1
+            else:
+                print('you have hit a wall')
+        elif movement == 'a':
+            if self.h_x_value > 0 and self.terrain_check('a') == True:
+                self.h_x_value -= 1
+            else:
+                print('you have hit a wall')
+        else:
+            pass
+
+# map_list = []
+# for i in range(4):
+#     map1 = Map()
+#     map_list.append(map1)
 #
-#     def __init__(self):
-#         list = []
-#         for y in range(0,10):
-#             list.append([])
-#             for x in range(0,10):
-#                 location1 = location()
-#                 slist = [' #',' #','  ']
-#                 s = random.choice(slist)
-#                 location1.set_data(y,x,s)
-#                 list[y][x].append(location1)
-#         self.map = list
-#
-#     def print_map(self):
-#         for y in range(len(self.map)):
-#             print('')
-#             print('-'*40)
-#             for x in range(len(self.map)):
-#                 print(self.map[y][x].show_data, '|', end = '')
-#         print('')
-#         print('-'*40)
-#
-# map1 = Map()
-# map1.print_map()
+# for j in range(len(map_list)):
+#     map_list[j].print_map()
 
-    # def clear_path(self,cy,cx):
-    #     self.map[cy][cx] = '  '
+def map_initialize():
+    map1 = Map()
+    time.sleep(1.5)
+    map1.print_map()
+    return map1
+
+def main():
+    map1 = map_initialize()
+    while True:
+        map1.movement()
+        map1.print_map()
+        map1.show_h_coordinate()
 
 
-#     def set_data(self, *data):
-#         self.terrain_type = data[0]
-#         self.terrain_symbol = data[1]
-#         self.y_value = data[2]
-#         self.x_value = data[3]
-#         # self.explored = data[4]
-#         # self.drops = data[5]
+    # monster_allocation()
 
-#     def show_data(self):
-#         print('Terrain type:', self.terrain_type)
-#         print('Terrain_symbol', self.terrain_symbol)
-#         print('Y_axis:', self.y_value)
-#         print('X_axis',self.x_value)
-#         # print('explored:',self.explored)
-#         # print('drops:', self.drops)
-#
-#
-#     def terrain_start(self):
-#             terrain_name_list = ['wall','tree','Curbstomp']
-#             terrain_
-#             orc_race = 'orc'
-#             orc_con = random.randint(3,5)
-#             orc_pwr = random.randint(4,6)
-#             orc_dfc = random.randint(2,3)
-#             orc_luc = random.randint(2,4)
-#             self.set_data(orc_name, orc_race, orc_con,orc_pwr,orc_dfc,orc_luc)
-
+if __name__ == '__main__':
+    main()
 
     # terrain_types = obstacle, land, entry, exit
     # y, x value = 0 to 9

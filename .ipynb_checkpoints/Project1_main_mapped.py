@@ -4,70 +4,67 @@ from Project1_Creature import *
 from Project1_Monsters import *
 from Project1_Hero import *
 from Project1_Mapping import *
+from Project1_battle import *
 
+# def crit_chance(crit1,atk1):
+#     a = random.randint(1,100)
+#     b = random.randint(80,120)
+#     if a > crit1:
+#         return (atk1*b)/100
+#     elif a <= crit1:
+#         time.sleep(1)
+#         print('it is a critical hit')
+#         return (atk1*b*2)/100
 
-def crit_chance(crit1,atk1):
-    a = random.randint(1,100)
-    b = random.randint(80,120)
-    if a > crit1:
-        return (atk1*b)/100
-    elif a <= crit1:
-        time.sleep(1)
-        print('it is a critical hit')
-        return (atk1*b*2)/100
-
-def fight_sequence(h_name1, h_hp1, h_atk1, h_crit1, h_dfc1, m_name1,m_race1, m_hp1, m_atk1, m_crit1, m_dfc1):
-    print('-'*20,'combat mode','-'*20)
-    global turn
-    global post_fight_hp
-    global monster_fought
-    turn = 2
-    while True:
-        if turn == 2:
-            if h_crit1/2.5 > m_crit1/2:
-                turn = 0
-                print(h_name1, 'managed to sneak up on', m_name1,'the',m_race1)
-            elif h_crit1/2.5 < m_crit1/2:
-                turn = 1
-                print(h_name1,'You have been ambushed by ', m_name1,'the',m_race1)
-        elif turn == 0:
-            turn = 1
-            time.sleep(0.5)
-            print('Hero attacks')
-            h_damage = round(crit_chance(h_crit1,(h_atk1-h_atk1*m_dfc1)))
-            m_hp1 -= h_damage
-            time.sleep(1)
-            print(h_name1,' have caused', h_damage, 'damage to ', m_name1,'the',m_race1,' have',m_hp1,'left')
-            print('-'*50)
-            if m_hp1 < 0:
-                print('you have won the fight')
-                post_fight_hp = h_hp1
-                monster_fought = m_race1
-                return post_fight_hp, monster_fought
-        elif turn == 1:
-            turn = 0
-            time.sleep(0.5)
-            print('Monster attacks')
-            m_damage = round(crit_chance(m_crit1,(m_atk1-m_atk1*h_dfc1)))
-            h_hp1 -= m_damage
-            print(m_name1,'the',m_race1, 'have caused', m_damage, 'damage to the hero have', h_hp1, 'hp left')
-            print('-'*50)
-            if h_hp1 < 0:
-                time.sleep(1)
-                print('YOU HAVE DIED')
-                time.sleep(1)
-                quit()
+# def fight_sequence(h_name1, h_hp1, h_atk1, h_crit1, h_dfc1, m_name1,m_race1, m_hp1, m_atk1, m_crit1, m_dfc1):
+#     print('-'*20,'combat mode','-'*20)
+#     global turn
+#     global post_fight_hp
+#     global monster_fought
+#     turn = 2
+#     while True:
+#         if turn == 2:
+#             if h_crit1/2.5 > m_crit1/2:
+#                 turn = 0
+#                 print(h_name1, 'managed to sneak up on', m_name1,'the',m_race1)
+#             elif h_crit1/2.5 < m_crit1/2:
+#                 turn = 1
+#                 print(h_name1,'You have been ambushed by ', m_name1,'the',m_race1)
+#         elif turn == 0:
+#             turn = 1
+#             time.sleep(0.5)
+#             print('Hero attacks')
+#             h_damage = round(crit_chance(h_crit1,(h_atk1-h_atk1*m_dfc1)))
+#             m_hp1 -= h_damage
+#             time.sleep(1)
+#             print(h_name1,' have caused', h_damage, 'damage to ', m_name1,'the',m_race1,' have',m_hp1,'left')
+#             print('-'*50)
+#             if m_hp1 < 0:
+#                 print('you have won the fight')
+#                 post_fight_hp = h_hp1
+#                 monster_fought = m_race1
+#                 return post_fight_hp, monster_fought
+#         elif turn == 1:
+#             turn = 0
+#             time.sleep(0.5)
+#             print('Monster attacks')
+#             m_damage = round(crit_chance(m_crit1,(m_atk1-m_atk1*h_dfc1)))
+#             h_hp1 -= m_damage
+#             print(m_name1,'the',m_race1, 'have caused', m_damage, 'damage to the hero have', h_hp1, 'hp left')
+#             print('-'*50)
+#             if h_hp1 < 0:
+#                 time.sleep(1)
+#                 print('YOU HAVE DIED')
+#                 time.sleep(1)
+#                 quit()
 
 
 def hero_start():
     hero1 = Hero()
     print('-'*100)
-    print('You have entered character creation')
-    print('-'*100)
     time.sleep(0.8)
-    hero1.stat_initialize()
     hero1.show_data()
-    hero1.set_current_hp(int(hero1.return_con()*25))
+    hero1.set_current_hp(int(hero1.return_con()*25 + 30))
     return hero1
 
 def map_initialize():
@@ -152,28 +149,11 @@ def map_encounter_check(my,mx):
         print(yx_list[s1])
         print('')
 
-# def soul_absorb(a):
-#     hero1 = hero_start()
-#     if a == 'orc':
-#         hero1.orc_soul(1)
-#     elif a == 'undead':
-#         pass
-#     elif a == 'dark_elf':
-#         hero1.dark_elf_soul(1)
-#     elif a == 'ogre':
-#         hero1.ogre_soul(1)
-#     elif a == 'goblin':
-#         hero1.goblin_soul(1)
-
-
-
-
 def main():
     game_start()
     hero1 = hero_start()
     map_initialize()
     monster_allocation()
-    fight_tick = 0
 
     while True:
         movement()
@@ -182,63 +162,39 @@ def main():
         map1.print_map()
         map_encounter_check(y, x)
         if monster_encounter == 1:
-            # fight_tick += 1
-            # hero1.combat_initialize1()
             monster_encountered = str(lineup_list[monster_id].return_name()+' the '+str(lineup_list[monster_id].return_race()))
             print('-'*100)
             print(hero1.return_name(), 'have encountered', monster_encountered)
             print('-'*100)
-            if fight_tick == 0:
-                fight_tick += 1
-                alpha = hero1.combat_initialize1()
-                # print(alpha)
-                # hero_combat_initialize(hero1.return_con(), hero1.return_pwr(), hero1.return_luc(), hero1.return_dfc() , hero1.return_name())
-            elif fight_tick != 0:
-                fight_tick += 1
-                alpha = hero1.combat_initialize2()
-                # print(alpha)
-                # hero_combat_initialize2(hero1.return_current_hp(), hero1.return_pwr(), hero1.return_luc(),
-                #                         hero1.return_dfc(), hero1.return_name())
-            beta = lineup_list[monster_id].monster_combat_initialize()
-            # print(beta)
             while True:
+                print('-' * 50)
                 battle_choice = input('will you fight or run ?')
+                print('-' * 50)
                 if battle_choice == 'fight':
+                    print('-' * 50)
                     print('you will fight like a man')
                     print('-' * 50)
-                    # fight_sequence(h_hp, h_atk, h_crit, h_dfc_rate, m_hp, m_atk, m_crit, m_dfc_rate, h_name, m_name, m_race)
-                    alpha_beta = alpha + beta
-                    print(alpha_beta)
-                    fight_sequence(*alpha_beta)
-                    hero1.set_current_hp(post_fight_hp)
-                    print('you have captured the soul of the ', monster_fought)
-                    hero1.soul_absorb(monster_fought)
-                    print('suckadick')
-                    time.sleep(1)
-                    # hero1.show_data()
+                    Battle(hero1,lineup_list[monster_id])
                     time.sleep(1)
                     map1.print_map()
                     break
                 elif battle_choice == 'run':
+                    print('-' * 50)
                     print('you run for your life')
+                    print('-' * 50)
                     if hero1.return_luc() > 3:
                         time.sleep(1)
+                        print('-' * 50)
                         print('you have successfully become a pussy')
+                        print('-' * 50)
                         map1.print_map()
                         break
                     else:
                         time.sleep(1)
-                        print('you have failed to escape')
-                        # fight_sequence(h_hp, h_atk, h_crit, h_dfc_rate, m_hp, m_atk, m_crit, m_dfc_rate, h_name, m_name)
-                        fight_sequence(*alpha_beta)
-                        hero1.set_current_hp(post_fight_hp)
-                        time.sleep(1)
-                        print('-'*50)
-                        print('you have captured the soul of the', monster_fought)
                         print('-' * 50)
-                        hero1.soul_absorb(monster_fought)
-                        time.sleep(1)
-                        # hero1.show_data()
+                        print('you have failed to escape')
+                        print('-' * 50)
+                        Battle(hero1, lineup_list[monster_id])
                         time.sleep(1)
                         map1.print_map()
                         break
